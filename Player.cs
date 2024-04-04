@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MineStep
 {
-    public class Player: IDisposable
+    public class Player/*: IDisposable*/
     {
         public int X { get; set; }
         public int Y { get; set; }
@@ -63,11 +63,11 @@ namespace MineStep
             }
         }
 
-        public void Dispose()
+        public void PlayerDispose()
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Game Over!");
+            Console.WriteLine("\n\tGame Over!");
             Console.ResetColor();
         }
     }

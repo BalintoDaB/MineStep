@@ -123,7 +123,10 @@ namespace MineStep
 
         public async Task Run()
         {
-                Console.Clear();
+
+            AI ai = new AI(new string[,] { }, 19, 9, "A", new int[] { 20, 10 });
+
+            Console.Clear();
                 CancellationTokenSource source = new CancellationTokenSource();
                 #region OPTIMALIZALNI KESOBB
                 while (true)
@@ -135,7 +138,7 @@ namespace MineStep
                     }
                     Console.Clear();
                     Print(true);
-                    await Task.Delay(500, source.Token); // Wait with cancellation
+                    await Task.Delay(800, source.Token); // Wait with cancellation
                     Console.Clear();
 
                     if (Console.KeyAvailable) // Check for player input
@@ -145,11 +148,34 @@ namespace MineStep
                     }
 
                     Print(false);
-                    await Task.Delay(500, source.Token); // Wait with cancellation
-                }
-                #endregion
-                await player.Move();
-                await Run();
+                    await Task.Delay(800, source.Token); // Wait with cancellation
+
+                    // Player lépése
+                    await player.Move();
+                    // AI lépése
+                    await ai.Move();
+                    Console.WriteLine($"\nAI új pozíciója: ({ai.X}, {ai.Y})");
+                    await Task.Delay(1000); // Wait for a second
+
+                    // Ha a player X-re lép
+                    if (Tiles[player.X, player.Y] == -1)
+                        {
+                            player.PlayerDispose();
+                            break; // Gameover
+                        }
+                    //Ha az AI X-re lép
+                    else if (Tiles[ai.X, ai.Y] == -1)
+                    {
+                        ai.AIDispose();
+                        break; //Victory
+                    }
+
+            }
+            #endregion
+            await player.Move();
+            await ai.Move();
+            Console.WriteLine($"\nAI új pozíciója: ({ai.X}, {ai.Y})");
+            await Run();
         }
     }
 }
