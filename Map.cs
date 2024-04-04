@@ -123,33 +123,33 @@ namespace MineStep
 
         public async Task Run()
         {
-            Console.Clear();
-            CancellationTokenSource source = new CancellationTokenSource();
-            #region OPTIMALIZALNI KESOBB
-            while (true)
-            {
-                if (Console.KeyAvailable) // Check for player input
-                {
-                    source.Cancel(); // Stop the loop when player presses Enter
-                    break;
-                }
                 Console.Clear();
-                Print(true);
-                await Task.Delay(500, source.Token); // Wait with cancellation
-                Console.Clear();
-
-                if (Console.KeyAvailable) // Check for player input
+                CancellationTokenSource source = new CancellationTokenSource();
+                #region OPTIMALIZALNI KESOBB
+                while (true)
                 {
-                    source.Cancel(); // Stop the loop when player presses Enter
-                    break;
-                }
+                    if (Console.KeyAvailable) // Check for player input
+                    {
+                        source.Cancel(); // Stop the loop when player presses Enter
+                        break;
+                    }
+                    Console.Clear();
+                    Print(true);
+                    await Task.Delay(500, source.Token); // Wait with cancellation
+                    Console.Clear();
 
-                Print(false);
-                await Task.Delay(500, source.Token); // Wait with cancellation
-            }
-            #endregion
-            await player.Move();
-            await Run();
+                    if (Console.KeyAvailable) // Check for player input
+                    {
+                        source.Cancel(); // Stop the loop when player presses Enter
+                        break;
+                    }
+
+                    Print(false);
+                    await Task.Delay(500, source.Token); // Wait with cancellation
+                }
+                #endregion
+                await player.Move();
+                await Run();
         }
     }
 }

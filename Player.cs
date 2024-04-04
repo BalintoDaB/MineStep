@@ -41,7 +41,20 @@ namespace MineStep
                 case ConsoleKey.D:
                     X++;
                     break;
+                case ConsoleKey.UpArrow:
+                    Y--;
+                    break;
+                case ConsoleKey.LeftArrow:
+                    X--;
+                    break;
+                case ConsoleKey.DownArrow:
+                    Y++;
+                    break;
+                case ConsoleKey.RightArrow:
+                    X++;
+                    break;
             }
+
             // check if the player is out of bounds
             if (X < 0 || X >= bounds[0] || Y < 0 || Y >= bounds[1])
             {
@@ -53,7 +66,9 @@ namespace MineStep
         public void Dispose()
         {
             Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Game Over!");
+            Console.ResetColor();
         }
     }
 }
