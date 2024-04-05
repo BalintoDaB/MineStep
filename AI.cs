@@ -29,7 +29,7 @@ namespace MineStep
             return Display[X, Y];
         }
 
-        public async Task Move()
+        public async Task Move(Player player, int maxWidth, int maxHeight)
         {
 
 
@@ -40,49 +40,54 @@ namespace MineStep
             //else
             //{
             //    // Ide kell az AI logika
-            Random random = new Random();
-            int direction = random.Next(4);
-
             //}
 
-            switch (direction)
-            {
-                case 0:
-                    Y--; // Felfelé mozgás
-                    break;
-                case 1:
-                    X--; // Balra mozgás
-                    break;
-                case 2:
-                    Y++; // Lefelé mozgás
-                    break;
-                case 3:
-                    X++; // Jobbra mozgás
-                    break;
-            }
+            
+            //D = direction
 
-            if (X < 0 || X >= bounds[0] || Y < 0 || Y >= bounds[1])
+            int playerDX = player.X - X;
+            int playerDY = player.Y - Y;
+
+            Random random = new Random();
+            int randomD = random.Next(2); 
+
+            if (randomD == 0) // Vízszintes mozgás
             {
-                // Ha kiment, akkor visszalép az előző pozícióba
-                switch (direction)
+                if (Math.Abs(playerDX) > Math.Abs(playerDY))
                 {
-                    case 0:
-                        Y++;
-                        break;
-                    case 1:
-                        X++;
-                        break;
-                    case 2:
-                        Y--;
-                        break;
-                    case 3:
+                    if (playerDX < 0 && X > 0)
                         X--;
-                        break;
+                    else if (playerDX > 0 && X < maxWidth - 1)
+                        X++;
+                }
+                else
+                {
+                    if (playerDY < 0 && Y > 0)
+                        Y--;
+                    else if (playerDY > 0 && Y < maxHeight - 1)
+                        Y++;
+                }
+            }
+            else // Függőleges mozgás
+            {
+                if (Math.Abs(playerDX) > Math.Abs(playerDY))
+                {
+                    if (playerDY < 0 && Y > 0)
+                        Y--;
+                    else if (playerDY > 0 && Y < maxHeight - 1)
+                        Y++;
+                }
+                else
+                {
+                    if (playerDX < 0 && X > 0)
+                        X--;
+                    else if (playerDX > 0 && X < maxWidth - 1)
+                        X++;
                 }
             }
         }
 
-        public void AIDispose()
+        public void AIDispose() //Victory
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Green;

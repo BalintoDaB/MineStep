@@ -153,27 +153,27 @@ namespace MineStep
                     // Player lépése
                     await player.Move();
                     // AI lépése
-                    await ai.Move();
+                    await ai.Move(player, Width, Height);
                     Console.WriteLine($"\nAI új pozíciója: ({ai.X}, {ai.Y})");
-                    await Task.Delay(1000); // Wait for a second
+                    await Task.Delay(800); // Wait for a second
 
                     // Ha a player X-re lép
                     if (Tiles[player.X, player.Y] == -1)
                         {
-                            player.PlayerDispose();
-                            break; // Gameover
+                            player.PlayerDispose(); // Gameover
+                            break;
                         }
                     //Ha az AI X-re lép
                     else if (Tiles[ai.X, ai.Y] == -1)
                     {
-                        ai.AIDispose();
-                        break; //Victory
+                        ai.AIDispose(); //Victory
+                        break;
                     }
 
             }
             #endregion
             await player.Move();
-            await ai.Move();
+            await ai.Move(player, Width, Height);
             Console.WriteLine($"\nAI új pozíciója: ({ai.X}, {ai.Y})");
             await Run();
         }

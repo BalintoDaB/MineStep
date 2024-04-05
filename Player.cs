@@ -63,7 +63,7 @@ namespace MineStep
             }
         }
 
-        public void PlayerDispose()
+        public void PlayerDispose() //Game Over
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Red;
