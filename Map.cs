@@ -124,7 +124,7 @@ namespace MineStep
         public async Task Run()
         {
 
-            AI ai = new AI(new string[,] { }, 19, 9, "A", new int[] { 20, 10 });
+            AI ai = new AI(new string[,] { }, 19, 9, "A", new int[] { 20, 10 }, player, 19, 10, new int[,] { });
 
             Console.Clear();
                 CancellationTokenSource source = new CancellationTokenSource();
@@ -153,7 +153,7 @@ namespace MineStep
                     // Player lépése
                     await player.Move();
                     // AI lépése
-                    await ai.Move(player, Width, Height);
+                    await ai.Move(player, Width, Height, Tiles);
                     Console.WriteLine($"\nAI új pozíciója: ({ai.X}, {ai.Y})");
                     await Task.Delay(800); // Wait for a second
 
@@ -169,11 +169,23 @@ namespace MineStep
                         ai.AIDispose(); //Victory
                         break;
                     }
+                    //Ha a player eléri a jobb alsó sarkot
+                    else if (player.X == 19 && player.Y == 9)
+                    {
+                        ai.AIDispose(); // Victory
+                        break;
+                    }
+                    //Ha az AI eléri a bal felső sarkot
+                    else if (ai.X == 0 && ai.Y == 0)
+                    {
+                        player.PlayerDispose(); //Gameover
+                        break;
+                    }
 
             }
             #endregion
             await player.Move();
-            await ai.Move(player, Width, Height);
+            await ai.Move(player, Width, Height, Tiles);
             Console.WriteLine($"\nAI új pozíciója: ({ai.X}, {ai.Y})");
             await Run();
         }
