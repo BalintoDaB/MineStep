@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace MineStep
 {
@@ -69,6 +70,11 @@ namespace MineStep
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("\n\tGame Over!");
             Console.ResetColor();
+            //Open the save.txt and write back, but increase the second number with 1
+            string[] save = File.ReadAllLines("save.txt");
+            int score = int.Parse(save[1]) + 1;
+            File.WriteAllText("save.txt", $"{save[0]}\n{score}\n{save[2]}");
+
         }
     }
 }
