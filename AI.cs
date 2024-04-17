@@ -45,16 +45,7 @@ namespace MineStep
 
         public async Task Move(Player player, int maxWidth, int maxHeight, int[,] tiles)
         {
-
-
-            //if (curTile() == "0")
-            //{
-            //    X++;
-            //}
-            //else
-            //{
-            //    // Ide kell az AI logika
-            //}
+   
 
             int targetX = 0;
             int targetY = 0;

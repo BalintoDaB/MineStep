@@ -120,106 +120,46 @@ namespace MineStep
         public async Task Run()
         {
 
-            
+
 
             Console.Clear();
             CancellationTokenSource source = new CancellationTokenSource();
             Print(true);
-            await Task.Delay(800, source.Token); // Wait for a second
+            await Task.Delay(800, source.Token); // Wait for a bit
             Console.Clear();
             Print(false);
-            await player.Move();
-            await ai.Move(player, Width, Height, Tiles);
-            //Console.WriteLine($"\nAI új pozíciója: ({ai.X}, {ai.Y})");
-            //await Task.Delay(800); // Wait for a second
+            await player.Move(); // Player lépése
+            await ai.Move(player, Width, Height, Tiles); // AI lépése
+            
+
             // Ha a player X-re lép
             if (Tiles[player.X, player.Y] == -1)
             {
                 player.PlayerDispose(); // Gameover
                 Run().Dispose();
             }
+
             //Ha az AI X-re lép
             else if (Tiles[ai.X, ai.Y] == -1)
             {
                 ai.AIDispose(); //Victory
                 Run().Dispose();
             }
+
             //Ha a player eléri a jobb alsó sarkot
             else if (player.X == 19 && player.Y == 9)
             {
                 ai.AIDispose(); // Victory
                 Run().Dispose();
             }
+
             //Ha az AI eléri a bal felső sarkot
             else if (ai.X == 0 && ai.Y == 0)
             {
                 player.PlayerDispose(); //Gameover
                 Run().Dispose();
             }
-            //#region OPTIMALIZALNI KESOBB
-            //while (true)
-            //{
-            //    if (Console.KeyAvailable) // Check for player input
-            //    {
-            //        source.Cancel(); // Stop the loop when player presses Enter
-            //        break;
-            //    }
-            //    Console.Clear();
-            //    Print(true);
-            //    await Task.Delay(800, source.Token); // Wait with cancellation
-            //    Console.Clear();
-
-            //    if (Console.KeyAvailable) // Check for player input
-            //    {
-            //        source.Cancel(); // Stop the loop when player presses Enter
-            //        break;
-            //    }
-
-            //    Print(false);
-            //    //await Task.Delay(800, source.Token); // Wait with cancellation
-
-            //    // Player lépése
-            //    await player.Move();
-            //    // AI lépése
-            //    await ai.Move(player, Width, Height, Tiles);
-            //    Console.WriteLine($"\nAI új pozíciója: ({ai.X}, {ai.Y})");
-            //    //await Task.Delay(800); // Wait for a second
-
-            //    // Ha a player X-re lép
-            //    if (Tiles[player.X, player.Y] == -1)
-            //    {
-            //        player.PlayerDispose(); // Gameover
-            //        Run().Dispose();
-            //        break;
-            //    }
-            //    //Ha az AI X-re lép
-            //    else if (Tiles[ai.X, ai.Y] == -1)
-            //    {
-            //        ai.AIDispose(); //Victory
-            //        Run().Dispose();
-            //        break;
-            //    }
-            //    //Ha a player eléri a jobb alsó sarkot
-            //    else if (player.X == 19 && player.Y == 9)
-            //    {
-            //        ai.AIDispose(); // Victory
-            //        Run().Dispose();
-            //        break;
-            //    }
-            //    //Ha az AI eléri a bal felső sarkot
-            //    else if (ai.X == 0 && ai.Y == 0)
-            //    {
-            //        player.PlayerDispose(); //Gameover
-            //                                //kill all instances of the Task run
-            //        Run().Dispose();
-            //        break;
-            //    }
-
-            //}
-            //#endregion
-            //await player.Move();
-            //await ai.Move(player, Width, Height, Tiles);
-            //Console.WriteLine($"\nAI új pozíciója: ({ai.X}, {ai.Y})");
+            
             await Run();
         }
     }

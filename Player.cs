@@ -64,7 +64,7 @@ namespace MineStep
             }
         }
 
-        public void PlayerDispose() //Vesztett
+        public void PlayerDispose() //Gameover
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Red;
