@@ -71,6 +71,7 @@ namespace MineStep
                         X++;
                     else if (targetX < X && IsValidMove(X - 1, Y, bounds[0], bounds[1], tiles))
                         X--;
+                    else X--;
                 }
                 else
                 {
@@ -95,6 +96,7 @@ namespace MineStep
                         X++;
                     else if (targetX < X && IsValidMove(X - 1, Y, bounds[0], bounds[1], tiles))
                         X--;
+                    else X--;
                 }
             }
         }
@@ -102,12 +104,12 @@ namespace MineStep
         public void AIDispose() //Victory
         {
             Console.Clear();
+            Program.PScore++;
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\n\tYou won!");
             Console.ResetColor();
-            string[] save = File.ReadAllLines("save.txt");
-            int score = int.Parse(save[0]) + 1;
-            File.WriteAllText("save.txt", $"{score}\n{save[1]}\n{save[2]}");
+            Console.ReadKey();
+            Program.Main();
         }
     }
 }

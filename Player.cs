@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using MineStep;
 
 namespace MineStep
 {
-    public class Player/*: IDisposable*/
+    public class Player
     {
         public int X { get; set; }
         public int Y { get; set; }
@@ -27,7 +28,7 @@ namespace MineStep
             int oldX = X;
             int oldY = Y;
             ConsoleKeyInfo key = await Task.Run(() => Console.ReadKey(true));
-            // move the player based on the key pressed
+            
             switch (key.Key)
             {
                 case ConsoleKey.W:
@@ -56,7 +57,6 @@ namespace MineStep
                     break;
             }
 
-            // check if the player is out of bounds
             if (X < 0 || X >= bounds[0] || Y < 0 || Y >= bounds[1])
             {
                 X = oldX;
@@ -64,17 +64,15 @@ namespace MineStep
             }
         }
 
-        public void PlayerDispose() //Game Over
+        public void PlayerDispose() //Vesztett
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("\n\tGame Over!");
             Console.ResetColor();
-            //Open the save.txt and write back, but increase the second number with 1
-            string[] save = File.ReadAllLines("save.txt");
-            int score = int.Parse(save[1]) + 1;
-            File.WriteAllText("save.txt", $"{save[0]}\n{score}\n{save[2]}");
-
+            Program.AIScore++;
+            Console.ReadKey();
+            Program.Main();
         }
     }
 }
